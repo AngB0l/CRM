@@ -1,0 +1,47 @@
+{% extends "crm/base.html" %}
+{% block content %}
+<input type="text" id="searchCompanyInput" class="searchInput" onkeyup="myFunction()" placeholder="Search for anything..">
+<div class="table-responsive">
+    <table class ="table table-sm table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Company</th>
+            <th scope="col">Field</th>
+            <th scope="col">Remarks</th>
+            <th scope="col">Address</th>
+            <th scope="col">Area</th>
+            <th scope="col">City</th>
+            <th scope="col">Last</th>
+            <th scope="col">First</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Email</th>
+            <th scope="col">Website</th>
+            <th scope="col">Quarry</th>
+            <th scope="col">To Do</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for company in companies %}
+        <tr>
+            <td>{{company.company}}</td>
+            <td>{{company.field}}</td>
+            <td>{{company.remarks}}</td>
+            <td>{{company.address}}</td>
+            <td>{{company.area}}</td>
+            <td>{{company.city}}</td>
+            <td>{{company.epitheto}}</td>
+            <td>{{company.onoma}}</td>
+            <td>{{company.stathero}}</td>
+            <td>{{company.kinito}}</td>
+            <td>{{company.email}}</td>
+            <td>{{company.website}}</td>
+            <td>{{company.qowners}}</td>
+            <td>{{company.todo}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
+
