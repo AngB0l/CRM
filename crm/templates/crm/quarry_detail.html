@@ -1,0 +1,18 @@
+{% extends "crm/base.html" %}
+{% block content %}
+    <article class="content-section">
+        <div>
+            <h1>{{object.company}}</h1>
+            <h2>{{object.name}}, {{object.type}}</h2>
+        </div>
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'quarry-update' object.id%}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'quarry-delete' object.id%}">Delete</a>
+        </div>
+        <b>Details:</b>
+        <div class="detail">
+            <p>Region : {{object.area}}, {{object.country}}</p>
+            <p>Color : {{object.colorPrimary}} & {{object.colorSecondary}}</p>
+        </div>
+    </article>
+{% endblock content %}

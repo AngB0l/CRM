@@ -1,0 +1,21 @@
+{% extends "crm/base.html" %}
+{% block content %}
+    <article class="content-section">
+        <div>
+            <h1>{{object.company}}</h1>
+            <p><h2>Date: {{ object.date|date:"j/m/y"}}</h2></p>
+        </div>
+        {% if object.user == user %}
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'company-update' object.id%}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'company-delete' object.id%}">Delete</a>
+        </div>
+        {% endif %}
+        <b>Comments:</b>
+        <div class="detail">
+         {{object.comments}}
+
+        </div>
+    </article>
+{% endblock content %}
+
