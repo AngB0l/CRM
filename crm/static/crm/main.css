@@ -22,6 +22,7 @@ table {
 table th{
      text-align: center;
 }
+
 .bg-steel {
   background-color: #5f788a;
 }
@@ -34,8 +35,38 @@ table th{
   color: #ffffff;
 }
 
+.meta{
+  margin: 4px;
+  line-height: 25px;
+}
+
+.left-side {
+    display: inline-block;
+    width: 60%;
+    border-bottom: 1px solid #e3e3e3;
+    border-left: 1px solid #e3e3e3;
+}
+.right-side{
+    display: inline-block;
+    width: 38%;
+    border-bottom: 1px solid #e3e3e3;
+    border-left: 1px solid #e3e3e3;
+}
+.map{
+   background-color: coral;
+   height: 120%;
+}
+.detail{
+     border: 1px solid #e3e3e3;
+}
+//does not work!!!!
 .site-header .navbar-nav .nav-link.active {
-  font-weight: 500;
+    border: 1px;
+    
+    /*opacity: 1;
+	border: 1px solid #000;
+	font-size: 130%;
+    font-weight: 500; */
 }
 
 .searchInput {
@@ -46,7 +77,16 @@ table th{
     margin-bottom: 12px; /* Add some space below the input */
 }
 
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+.link-black {
+   color: black;
+}
 #content{
-    margin:0%;
-    padding:1%;
+    max-width:100%;
 }

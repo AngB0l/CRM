@@ -8,18 +8,19 @@
             <th scope="col">Date</th>
             <th scope="col">User</th>
             <th scope="col">Company</th>
-            <th scope="col">Project</th>
             <th scope="col">Comment</th>
+            <th scope="col">Reminder</th>
         </tr>
         </thead>
         <tbody>
         {% for contact in contacts %}
         <tr>
-            <td>{{contact.date}}</td>
+            <td>{{contact.date|date:"j/m/y"}}</td>
             <td>{{contact.user}}</td>
-            <td>{{contact.company}}</td>
-            <td>{{contact.project}}</td>
-            <td>{{contact.comment}}</td>
+
+            <td><a class="link-black" href="{% url 'company-detail' contact.company.pk %}">{{contact.company}}</a></td>
+            <td>{{contact.comments}}</td>
+            <td>{{contact.reminder|date:"j/m/y"}}</td>
         </tr>
         {% endfor %}
         </tbody>

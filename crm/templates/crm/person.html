@@ -1,5 +1,30 @@
 {% extends "crm/base.html" %}
-
 {% block content %}
-<h1>persons</h1>
+<input type="text" id="searchContactInput" class="searchInput" onkeyup="myFunction()" placeholder="Search for anything..">
+<div class="table-responsive">
+    <table class ="table table-sm table-striped table-hover table-bordered" >
+        <thead>
+        <tr>
+            <th scope="col">Company</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact_detail in persons %}
+        <tr>
+            <td>{{contact_detail.company}}</td>
+            <td>{{contact_detail.fname}}</td>
+            <td>{{contact_detail.lname}}</td>
+            <td>{{contact_detail.position}}</td>
+            <td>{{contact_detail.email}}</td>
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock content %}
+

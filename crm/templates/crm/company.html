@@ -11,33 +11,25 @@
             <th scope="col">Address</th>
             <th scope="col">Area</th>
             <th scope="col">City</th>
-            <th scope="col">Last</th>
-            <th scope="col">First</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Mobile</th>
-            <th scope="col">Email</th>
+            <th scope="col">Country</th>
             <th scope="col">Website</th>
-            <th scope="col">Quarry</th>
+            <th scope="col">Phone</th>
             <th scope="col">To Do</th>
         </tr>
         </thead>
         <tbody>
         {% for company in companies %}
         <tr>
-            <td>{{company.company}}</td>
-            <td>{{company.field}}</td>
+            <td><a class="link-black" href="{% url 'company-detail' company.pk %}">{{company.company}}</a></td>
+            <td>{{company.get_field_display}}</td>
             <td>{{company.remarks}}</td>
             <td>{{company.address}}</td>
             <td>{{company.area}}</td>
             <td>{{company.city}}</td>
-            <td>{{company.epitheto}}</td>
-            <td>{{company.onoma}}</td>
-            <td>{{company.stathero}}</td>
-            <td>{{company.kinito}}</td>
-            <td>{{company.email}}</td>
-            <td>{{company.website}}</td>
-            <td>{{company.qowners}}</td>
-            <td>{{company.todo}}</td>
+            <td>{{company.country}}</td>
+            <td><a class="link-black" target="_blank" href="{{company.website}}">{{company.website}}</a></td>
+            <td>{{company.phone}}</td>
+            <td>{{company.pending}}</td>
         </tr>
         {% endfor %}
         </tbody>

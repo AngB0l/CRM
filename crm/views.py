@@ -1,107 +1,105 @@
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .models import Company, Contact,ContactDetails, Quarry
+#from bootstrap_datepicker_plus import DateTimePickerInput
 
-companies = [
-    {
-        'company': 'kallimarmaro',
-        'field': 'Marble',
-        'remarks': 'Excellent',
-        'address': '7o xlm thessalonikis thermis',
-        'area': 'thermi',
-        'city': 'thessaloniki',
-        'epitheto': 'bolaris',
-        'onoma': 'markos',
-        'stathero': '2310461611',
-        'kinito': '6973203410',
-        'email': 'info@kallimarmaro.gr',
-        'website': 'www.kallimarmaro.gr',
-        'qowners': 'yes',
-        'todo': 'send samples',
-    },
-    {
-            'company': 'sachanas',
-            'field': 'Marble',
-            'remarks': 'have thassos blocks',
-            'address': 'kalohori',
-            'area': 'ditika',
-            'city': 'thessaloniki',
-            'epitheto': 'sachanas',
-            'onoma': 'ilias',
-            'stathero': '2310111611',
-            'kinito': '6974630351',
-            'email': 'info@ms.gr',
-            'website': 'www.sachanas.gr',
-            'qowners': 'no',
-            'todo': 'visit factory',
-        },
-]
-contacts = [
-    {
-        'date' : '11/7/2019',
-        'user' : 'chrys',
-        'company': 'sachanas',
-        'project' : 'general',
-        'comment' : 'zitisan prosfora gia 10000m2 thasou gia ergo sti ksanthi',
-    },
-    {
-        'date': '18/8/2019',
-        'user': 'chrys',
-        'company': 'sachanas',
-        'project': 'general',
-        'comment': 'zitisan prosfora gia 10000m2 thasou gia ergo sti kavala',
-    },
-    {
-        'date': '19/9/2019',
-        'user': 'chrys',
-        'company': 'petra',
-        'project': 'general',
-        'comment': 'piga apo to latomeio gia na doume ogkous',
-    },
-]
-persons = [
-    {
-        'lname':'bolaris',
-        'fname':'markos' ,
-        'company':'kallimarmaro',
-        'possition':'CEO',
-        'mphone' : '6973203401',
-    },
-    {
-        'lname': 'sachanas',
-        'fname': 'ilias',
-        'company': 'sachanas Marble',
-        'possition': 'CEO',
-        'mphone' : '6952207806',
-    },
-    {
-        'lname': 'bolari',
-        'fname': 'chrysavgi',
-        'company': 'kallimarmaro',
-        'possition': 'sales',
-        'mphone' : '6973203409',
-    },
 
-]
+# Company
+class CompanyListView(LoginRequiredMixin, ListView):
+    model = Company
+    template_name = 'crm/company.html'
+    context_object_name = 'companies'
+    ordering = ['-pk']
+class CompanyDetailView(LoginRequiredMixin, DetailView):
+    model = Company
+class CompanyCreateView(LoginRequiredMixin, CreateView):
+    model = Company
+    fields = ['company', 'field', 'remarks', 'address','area','city','country', 'website', 'phone', 'pending']
+class CompanyUpdateView(LoginRequiredMixin, UpdateView):
+    model = Company
+    fields = ['company', 'field', 'remarks', 'address','area','city','country', 'website', 'phone', 'pending']
+class CompanyDeleteView(LoginRequiredMixin, DeleteView):
+    model = Company
+    success_url = '/'
 
-def home(request):
-    return render(request, 'crm/home.html')
+#Contact
+class ContactListView(LoginRequiredMixin, ListView):
+    model = Contact
+    template_name = 'crm/contact.html'
+    context_object_name = 'contacts'
+    ordering = ['-pk']
+class ContactDetailView(LoginRequiredMixin, DetailView):
+    model = Contact
+class ContactCreateView(LoginRequiredMixin, CreateView):
+    model = Contact
+    fields = ['date', 'company', 'comments','reminder']
+    #to pass in the user foreign key
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+class ContactUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+    model = Contact
+    fields = ['date', 'company', 'comments','reminder']
+    #LoginRequiredMixin:
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    def test_func(self):
+        contact = self.get_object()
+        if self.request.user == contact.user:
+            return True
+        else:
+            return False
+class ContactDeleteView(LoginRequiredMixin,UserPassesTestMixin, DeleteView):
+    model=Contact
+    success_url = '/'
+    def test_func(self):
+        contact = self.get_object()
+        if contact.user == self.request.user:
+            return True
+        else:
+            return False
 
-def company(request):
-    context = {
-        'companies' : companies
-    }
-    return render(request, 'crm/company.html', context)
+#Quarry
+class QuarryListView(LoginRequiredMixin, ListView):
+    model = Quarry
+    template_name = 'crm/quarry.html'
+    context_object_name = 'quarries'
+    ordering = ['-pk']
+class QuarryDetailView(LoginRequiredMixin, DetailView):
+    model = Quarry
+class QuarryCreateView(LoginRequiredMixin, CreateView):
+    model = Quarry
+    fields = ['company', 'area', 'country', 'name', 'type', 'colorPrimary', 'colorSecondary']
+    # LoginRequiredMixin:
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+class QuarryUpdateView(LoginRequiredMixin, UpdateView):
+    model = Quarry
+    fields = ['company', 'area', 'country', 'name', 'type', 'colorPrimary', 'colorSecondary']
+    #LoginRequiredMixin:
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+class QuarryDeleteView(LoginRequiredMixin, DeleteView):
+    model=Quarry
+    success_url = '/quarry/'
+    def test_func(self):
+        contact = self.get_object()
+        if contact.user == self.request.user:
+            return True
+        else:
+            return False
 
-def quarry(request):
-    return render(request, 'crm/quarry.html')
 
-def contact(request):
-    context = {
-        'contacts': contacts
-    }
-    return  render(request, 'crm/contact.html', context)
-
+#Details / Personnel
+@login_required
 def person(request):
     context = {
-        'persons' : persons
+        'contact_details' : ContactDetails.objects.all()
     }
-    return  render(request, 'crm/person.html', context)
+    return  render(request, 'crm/contact_detail.html', context)
+
